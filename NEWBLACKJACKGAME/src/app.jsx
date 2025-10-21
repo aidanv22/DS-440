@@ -665,8 +665,7 @@
 
 // START OF MULTIPLAYER WORKING GAME
 
-
-  import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const BlackjackGame = () => {
   const [deck, setDeck] = useState([]);
@@ -964,6 +963,23 @@ const BlackjackGame = () => {
     setPlayers(newPlayers);
   };
 
+  const endGame = () => {
+    setNumPlayers(null);
+    setCurrentPlayer(0);
+    setDealerHand([]);
+    setDealerScore(0);
+    setDealtCards([]);
+    setGameState('modeSelect');
+    setMessage('Select number of players');
+    setDeck(createDeck());
+    const newPlayers = [
+      { hand: [], score: 0, chips: 10000, bet: 0, name: 'Player 1' },
+      { hand: [], score: 0, chips: 10000, bet: 0, name: 'Player 2' },
+      { hand: [], score: 0, chips: 10000, bet: 0, name: 'Player 3' }
+    ];
+    setPlayers(newPlayers);
+  };
+
   const canDoubleDown = () => {
     return players[currentPlayer].hand.length === 2 && players[currentPlayer].chips >= players[currentPlayer].bet;
   };
@@ -1106,6 +1122,29 @@ const BlackjackGame = () => {
       position: 'relative'
     }}>
       <div style={{ width: '100%', maxWidth: '1400px' }}>
+        {/* End Game Button */}
+        <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
+          <button
+            onClick={endGame}
+            style={{
+              padding: '12px 24px',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              fontSize: '16px',
+              color: 'white',
+              background: 'linear-gradient(180deg, #dc2626 0%, #991b1b 100%)',
+              border: '2px solid rgba(255,255,255,0.3)',
+              cursor: 'pointer',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
+              transition: 'transform 0.2s'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            End Game
+          </button>
+        </div>
+
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <h1 style={{
             fontSize: '60px',
